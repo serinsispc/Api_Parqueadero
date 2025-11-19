@@ -75,7 +75,7 @@ namespace SQL.Controler.Tables
             try
             {
                 var cn = new ConnectionSQL();
-                var query = $"select *from Motos_Diarias where NumeroTiquete={tiquete}";
+                var query = $"select *from Motos_Diarias where NumeroTiquete={tiquete} and id_EstadoVehiculo=1";
                 var resp = await cn.EjecutarConsulta(db, query);
                 if (resp != null)
                 {
@@ -109,17 +109,20 @@ namespace SQL.Controler.Tables
                 return new Motos_Diarias();
             }
         }
-
+        public class  consecutivoTiket
+        {
+            public int Column1 { get; set; }
+        }
         public static async Task<int> HallarNumeroTiket(string db)
         {
             try
             {
                 var cn = new ConnectionSQL();
-                var query = $"select isnull(MAX(NumeroTiquete),0) from Motos_Diarias ";
+                var query = $"select isnull( MAX(NumeroTiquete),0) from Motos_Diarias";
                 var resp = await cn.EjecutarConsulta(db, query);
                 if (resp != null)
                 {
-                    return JsonConvert.DeserializeObject<int>(resp.ToString());
+                    return JsonConvert.DeserializeObject<consecutivoTiket>(resp).Column1;
                 }
                 return  0;
             }
