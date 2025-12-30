@@ -34,6 +34,7 @@ namespace SQL.Models.Views
 
         public int tax_detail_id { get; set; }
         public int idAmbiente { get; set; }
+        public int idDIAN { get; set; }
     }
 
 }

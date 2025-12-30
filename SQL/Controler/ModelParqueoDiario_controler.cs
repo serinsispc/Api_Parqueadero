@@ -1,4 +1,5 @@
-﻿using SQL.Controler.Tables;
+﻿using SQL.Controler.Procedures;
+using SQL.Controler.Tables;
 using SQL.Controler.Views;
 using SQL.Models;
 using SQL.Models.Tables;
@@ -27,7 +28,8 @@ namespace SQL.Controler
                 model.listaTarifaDia=await TarifaDia_controler.Lista(db);
                 model.listaTarifasVariables = await TarifasVariables_controler.Lista(db);
                 model.listaResoluciones = await V_Resoluciones_controler.Lista(db);
-
+                model.Configuracion_Software = await Configuracion_Software_controler.Consultar(db);
+                model.configuracionDians= await ConfiguracionDian_controler.Lista(db);
                 return model;
             }
             catch(Exception ex)

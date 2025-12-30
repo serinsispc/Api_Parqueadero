@@ -13,7 +13,7 @@ namespace SQL.Models
     {
         public List<TipoVehiculo> tipoVehiculos { get; set; }
 
-        public List<Motos_Diarias> ListaVehiculosParqueados { get; set; }
+        public List<V_Motos_Diarias> ListaVehiculosParqueados { get; set; }
 
         public List<V_ClienteMensualidad> ListaMensualidad { get; set; }
 
@@ -25,6 +25,8 @@ namespace SQL.Models
         public List<TarifaDia> listaTarifaDia { get; set; }
         public List<TarifasVariables> listaTarifasVariables { get; set; }
         public List<V_Resoluciones> listaResoluciones { get; set; }
+        public Configuracion_Software Configuracion_Software { get; set; }
+        public List<ConfiguracionDian> configuracionDians { get; set; }
 
     }
 }

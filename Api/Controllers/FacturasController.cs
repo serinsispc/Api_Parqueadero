@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SQL.Controler.Tables;
+using SQL.Controler.Views;
 using SQL.Models.Tables;
 
 namespace Api.Controllers
@@ -42,7 +43,25 @@ namespace Api.Controllers
         {
             var db = HttpContext.Items["DB"];
             var resp = await Facturas_controler.CRUD($"{db}", facturas,accion);
-            return Ok(resp);
+            if(resp.estado)
+            {
+                int id = 0;
+                if (resp.nuevoId =="")
+                {
+                    id = Convert.ToInt32(resp.idAfectado);
+                }
+                else
+                {
+                    id = Convert.ToInt32(resp.nuevoId);
+                }
+                var restornar=await V_Facturas_controler.ConsultarId($"{db}",id);
+                return Ok(restornar);
+            }
+            else
+            {
+                return Ok(resp);
+            }
+
         }
     }
 }

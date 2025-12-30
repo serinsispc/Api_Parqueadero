@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SQL.Controler.Tables;
+using SQL.Controler.Views;
 using SQL.Models.Tables;
 
 namespace Api.Controllers
@@ -15,7 +16,15 @@ namespace Api.Controllers
         {
             var db = HttpContext.Items["DB"];
             var resp = await FacturaElectronica_controler.CRUD($"{db}",accion,factura);
-            return Ok(resp);
+            if (resp.estado)
+            {
+                var retornar = await V_Facturas_controler.ConsultarId($"{db}",factura.idFactura);
+                return Ok(retornar);
+            }
+            else
+            {
+                return BadRequest(resp);
+            }
         }
 
         [HttpPost("ConsultarCUFE/{cufe}")]

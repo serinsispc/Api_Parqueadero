@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SQL.Models.Tables;
+using SQL.Models.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,23 +12,23 @@ namespace SQL.Controler.Tables
 {
     public class Motos_Diarias_controler
     {
-        public static async Task<List<Motos_Diarias>> ListaParqueaderos(string db)
+        public static async Task<List<V_Motos_Diarias>> ListaParqueaderos(string db)
         {
             try
             {
                 var cn = new ConnectionSQL();
-                var query = $"select *from Motos_Diarias where id_EstadoVehiculo=1";
+                var query = $"select *from V_Motos_Diarias where id_EstadoVehiculo=1";
                 var resp = await cn.EjecutarConsulta(db,query,true);
                 if (resp != null) 
                 { 
-                    return JsonConvert.DeserializeObject<List<Motos_Diarias>>(resp.ToString());
+                    return JsonConvert.DeserializeObject<List<V_Motos_Diarias>>(resp.ToString());
                 }
-                return new List<Motos_Diarias>();
+                return new List<V_Motos_Diarias>();
             }
             catch (Exception ex)
             {
                 string msg = ex.Message;
-                return new List<Motos_Diarias>();
+                return new List<V_Motos_Diarias>();
             }
         }
 
@@ -90,6 +91,26 @@ namespace SQL.Controler.Tables
             }
         }
 
+        public static async Task<Motos_Diarias> ConsultarNumeroTargeta(string db, string targeta)
+        {
+            try
+            {
+                var cn = new ConnectionSQL();
+                var query = $"select *from Motos_Diarias where numeroTargeta='{targeta}' and id_EstadoVehiculo=1";
+                var resp = await cn.EjecutarConsulta(db, query);
+                if (resp != null)
+                {
+                    return JsonConvert.DeserializeObject<Motos_Diarias>(resp.ToString());
+                }
+                return new Motos_Diarias();
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                return new Motos_Diarias();
+            }
+        }
+
         public static async Task<Motos_Diarias> ConsultarPLACA(string db, string placa)
         {
             try
@@ -130,6 +151,22 @@ namespace SQL.Controler.Tables
             {
                 string msg = ex.Message;
                 return 0;
+            }
+        }
+
+        public static async Task<V_Motos_Diarias> ConsultarVehiculoParqueado(string db,string registro)
+        {
+            try
+            {
+                var cn = new ConnectionSQL();
+                var query = $"Exec Buscar_Motos_Diarias_PorRegistro '{registro}'";
+                var resp = await cn.EjecutarConsulta(db, query);
+                return JsonConvert.DeserializeObject<V_Motos_Diarias>(resp);
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                return new V_Motos_Diarias();
             }
         }
     }
