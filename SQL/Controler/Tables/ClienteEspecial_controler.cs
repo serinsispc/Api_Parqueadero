@@ -11,6 +11,11 @@ namespace SQL.Controler.Tables
 {
     public class ClienteEspecial_controler
     {
+        /// <summary>
+        /// hola
+        /// </summary>
+        /// <param name="db"></param>
+        /// <returns></returns>
         public static async Task<List<ClienteEspecial>>Lista(string db)
         {
             try
